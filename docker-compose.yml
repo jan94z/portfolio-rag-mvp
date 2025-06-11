@@ -8,15 +8,17 @@ services:
       - qdrant_data:/qdrant/storage
     restart: unless-stopped
 
-  # api:
-  #   build: ./api
-  #   container_name: rag-api
-  #   ports:
-  #     - "8000:8000"
-  #   environment:
-  #     - example=example
-  #   depends_on:
-  #     - qdrant
+  api:
+    build:
+      dockerfile: ./app /Dockerfile
+    container_name: rag-api
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - qdrant
+    restart: unless-stopped
 
 volumes:
   qdrant_data:

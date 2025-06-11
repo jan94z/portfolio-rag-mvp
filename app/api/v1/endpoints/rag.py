@@ -3,12 +3,8 @@ from app.core.embedding import embed_chunks
 from app.core.qdrant_client import semantic_search
 from openai import OpenAI
 import os
-from dotenv import load_dotenv
 
 router = APIRouter()
-load_dotenv()  # Load environment variables from .env file
-
-# Make sure your OpenAI API key is set as an environment variable: OPENAI_API_KEY
 
 @router.post("/rag")
 def rag_query(
