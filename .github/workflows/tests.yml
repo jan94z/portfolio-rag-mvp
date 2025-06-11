@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - Basic-Rag-Pipeline
   pull_request:
     branches:
       - main
