@@ -1,10 +1,6 @@
-import sys
 import os
 from pathlib import Path
 import click
-
-# Import core logic
-# sys.path.append(str(Path(__file__).resolve().parent.parent))  # add project root to sys.path
 
 from app.core.doc_parsing import parse_txt_file
 from app.core.chunking import chunk_text
