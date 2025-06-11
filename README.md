@@ -5,7 +5,7 @@ Status: *Work in progress* \
 This project is a hands-on exercise in GenAI engineering. Its aim is to cover:
 * REST API endpoints via FastAPI (optionally with authentication)
 * Retrieval-Augmented Generation (RAG) pipeline
-* Integration of a vector database for document retrieval
+* Integration of a vector database for document retrieval (Qdrant)
 * Embedding generation and storage
 * Querying large language models (LLMs) via API (OpenAI, later self-hosted models)
 * Containerization with Docker
