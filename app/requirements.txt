@@ -1,3 +1,8 @@
 fastapi
 python-dotenv
 uvicorn
+langchain-text-splitters
+tiktoken
+sentence-transformers
+qdrant-client
+openai

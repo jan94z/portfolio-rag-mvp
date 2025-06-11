@@ -1,9 +1,12 @@
 from fastapi import FastAPI
+from app.api.v1.endpoints import upload, search, rag
+
+app = FastAPI(
+    title="RAG Backend Portfolio",
+    version="0.1.0"
+)
 
 
-app = FastAPI()
-
-
-@app.get("/")
-def read_root():
-    return {"msg": "RAG MVP API is running"}
+app.include_router(search.router, prefix="/api/v1")
+app.include_router(rag.router, prefix="/api/v1")
+# app.include_router(upload.router, prefix="/api/v1")
