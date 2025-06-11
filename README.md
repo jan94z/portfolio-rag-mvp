@@ -1,5 +1,6 @@
 # Retrieval Augmented Generation Portfolio Project
-Status: *Work in progress*
+Status: *Work in progress* \
+[Project Kanban Board](https://github.com/users/jan94z/projects/4)
 
 This project is a hands-on exercise in GenAI engineering. Its aim is to cover:
 * REST API endpoints via FastAPI (optionally with authentication)
