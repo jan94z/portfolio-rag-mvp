@@ -50,6 +50,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} << EOF
             mkdir -p /root/app
+            echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > /app/.env
             echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > /root/app/.env
           EOF
 

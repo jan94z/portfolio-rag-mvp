@@ -1,12 +1,4 @@
-output "cluster_id" {
-  value = digitalocean_kubernetes_cluster.rag_cluster.id
-}
-
-output "endpoint" {
-  value = digitalocean_kubernetes_cluster.rag_cluster.endpoint
-}
-
-output "kubeconfig" {
-  value     = digitalocean_kubernetes_cluster.rag_cluster.kube_config[0].raw_config
-  sensitive = true
+output "droplet_ip" {
+  description = "Public IP address of the deployed droplet"
+  value       = digitalocean_droplet.portfolio-rag-mvp-vm.ipv4_address
 }
