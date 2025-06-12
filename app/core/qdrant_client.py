@@ -10,35 +10,6 @@ client = QdrantClient(host="localhost", port=6333)  # Or 'qdrant' if Docker Comp
 client = QdrantClient(host=os.environ.get("QDRANT_HOST", "localhost"),
                       port=int(os.environ.get("QDRANT_PORT", 6333)))
 
-def ensure_collection():
-    """Create or recreate the vector collection with the correct config."""
-    collections = [c.name for c in client.get_collections().collections]
-    if COLLECTION_NAME not in collections:
-        client.recreate_collection(
-            collection_name=COLLECTION_NAME,
-            vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE)
-        )
-
-def upsert_chunks(chunks: List[str], vectors: List[List[float]], doc_id: str = None):
-    """
-    Upsert chunks and their embeddings to Qdrant.
-
-    Args:
-        chunks (List[str]): List of text chunks.
-        vectors (List[List[float]]): List of embedding vectors.
-        doc_id (str): Optional document identifier for source tracking.
-    """
-    ensure_collection()
-    points = [
-        PointStruct(
-            id=idx,  # Let Qdrant autogenerate
-            vector=vector,
-            payload={"text": chunk, "doc_id": doc_id} if doc_id else {"text": chunk}
-        )
-        for idx, (chunk, vector) in enumerate(zip(chunks, vectors))
-    ]
-    client.upsert(collection_name=COLLECTION_NAME, points=points)
-
 def semantic_search(query_vector: List[float], top_k: int = 5) -> List[dict]:
     """
     Search the collection for the top_k most similar vectors.
@@ -50,7 +21,12 @@ def semantic_search(query_vector: List[float], top_k: int = 5) -> List[dict]:
     Returns:
         List[dict]: List of dicts with 'text' and 'score'.
     """
-    ensure_collection()
+    try:
+        client.get_collection(COLLECTION_NAME)
+    except Exception as e:
+        print(f"Collection '{COLLECTION_NAME}' not found. Ensure it exists or recreate it.")
+        raise e
+    
     results = client.search(
         collection_name=COLLECTION_NAME,
         query_vector=query_vector,
