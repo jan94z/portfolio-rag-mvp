@@ -9,8 +9,7 @@ services:
     restart: unless-stopped
 
   api:
-    build:
-      dockerfile: ./app/Dockerfile
+    image: ${DOCKERHUB_USERNAME}/portfolio-rag-mvp:latest
     container_name: rag-api
     ports:
       - "8000:8000"
