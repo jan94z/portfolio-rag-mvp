@@ -43,6 +43,15 @@ jobs:
           echo "${{ secrets.DROPLET_SSH_KEY }}" | base64 -d > private_key
           chmod 600 private_key
 
+      - name: Install Docker on Droplet
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key root@${{ secrets.DROPLET_IP }} "snap install docker"
+      - name: Docker login on Droplet
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key root@${{ secrets.DROPLET_IP }} << EOF
+            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          EOF
+
       - name: Ensure /root/app exists
         run: |
           ssh -o StrictHostKeyChecking=no -i private_key root@${{ secrets.DROPLET_IP }} "mkdir -p /root/app"
