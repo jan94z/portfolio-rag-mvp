@@ -27,3 +27,14 @@ resource "digitalocean_firewall" "rag_api_fw" {
     destination_addresses = ["0.0.0.0/0"]
   }
 }
+
+
+
+
+variable "your_local_ip" {
+  type        = string
+  description = "Your IP address for secure SSH access"
+}
+
+
+your_local_ip = "1.2.3.4/32"  # Replace with your real IP

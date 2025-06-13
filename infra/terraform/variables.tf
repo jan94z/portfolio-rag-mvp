@@ -27,7 +27,4 @@ variable "ssh_key_fingerprint" {
   type        = string
 }
 
-variable "your_local_ip" {
-  type        = string
-  description = "Your IP address for secure SSH access"
-}
+
