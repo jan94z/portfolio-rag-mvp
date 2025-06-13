@@ -27,4 +27,9 @@ variable "ssh_key_fingerprint" {
   type        = string
 }
 
+variable "my_ip" {
+  type        = string
+  description = "Your current public IP to allow SSH access"
+}
+
 
