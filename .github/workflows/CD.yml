@@ -43,6 +43,10 @@ jobs:
           echo "${{ secrets.DROPLET_SSH_KEY }}" | base64 -d > private_key
           chmod 600 private_key
 
+      - name: Ensure /root/app exists
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key root@${{ secrets.DROPLET_IP }} "mkdir -p /root/app"
+
       - name: Copy Docker Compose file to Droplet
         run: |
           scp -o StrictHostKeyChecking=no -i private_key infra/deploy/docker-compose.yml root@${{ secrets.DROPLET_IP }}:/root/app/docker-compose.yml
@@ -50,7 +54,6 @@ jobs:
       - name: Create .env file on Droplet
         run: |
           ssh -o StrictHostKeyChecking=no -i private_key root@${{ secrets.DROPLET_IP }} << EOF
-            mkdir -p /root/app
             echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > /root/app/.env
             echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> /root/app/.env
           EOF
