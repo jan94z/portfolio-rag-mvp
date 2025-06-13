@@ -1,11 +1,11 @@
-# .github/workflows/tests.yml
+# .github/workflows/CI.yml
 name: CI
 
 on:
   push:
     branches:
       - main
-      - Basic-RAG-Pipeline
+      - deployment
   pull_request:
     branches:
       - main
