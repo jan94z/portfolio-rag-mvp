@@ -22,4 +22,4 @@ The codebase is structured for easy extension, experimentation, and migration to
 terraform init
 terraform plan
 terraform apply 
-```
+```  
