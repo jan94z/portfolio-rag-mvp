@@ -21,5 +21,5 @@ The codebase is structured for easy extension, experimentation, and migration to
 ```bash
 terraform init
 terraform plan
-terraform apply
+terraform apply 
 ```
