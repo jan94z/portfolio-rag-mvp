@@ -17,7 +17,7 @@ This project is a hands-on exercise in GenAI engineering. Its aim is to cover:
 The main goal is to demonstrate the design and implementation of a modern, production-oriented GenAI backend as a portfolio showcase.
 The codebase is structured for easy extension, experimentation, and migration to self-hosted LLMs and cloud-native infrastructure.
 
-## CODE DUMP
+## CODE DUMP 
 ```bash
 terraform init
 terraform plan
