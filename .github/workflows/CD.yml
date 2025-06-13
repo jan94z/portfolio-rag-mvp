@@ -46,7 +46,7 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no infra/deploy/docker-compose.yml root@${{ secrets.DROPLET_IP }}:/root/app/docker-compose.yml
 
-      - name: Create .env on Droplet
+      - name: Create .env on Droplet 
         run: |
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DROPLET_IP }} << EOF
             mkdir -p /root/app
