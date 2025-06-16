@@ -5,9 +5,9 @@ from typing import List
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct, VectorParams, Distance
 from dotenv import load_dotenv
-from app.core.doc_parsing import parse_txt_file
-from app.core.chunking import chunk_text
-from app.core.embedding import embed_chunks
+from backend.core.doc_parsing import parse_txt_file
+from backend.core.chunking import chunk_text
+from backend.core.embedding import embed_chunks
 
 load_dotenv("/home/jan/portfolio-rag-mvp/.env")
 VECTOR_SIZE = 384  # For all-MiniLM-L6-v2
@@ -71,4 +71,5 @@ def main(folderpath: str):
             print(f"Skipping non-TXT file: {file}")
 
 if __name__ == "__main__":
-    main()
+    # main()
+    ensure_collection()

@@ -1,0 +1,16 @@
+httpx
+fastapi
+uvicorn
+langchain-text-splitters
+tiktoken
+psycopg2-binary
+sentence-transformers
+qdrant-client
+openai
+python-jose[cryptography]
+passlib[bcrypt]
+sqlalchemy
+psycopg2-binary
+streamlit
+requests
+python-dotenv
