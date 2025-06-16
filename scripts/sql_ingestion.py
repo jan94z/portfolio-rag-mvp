@@ -72,7 +72,25 @@ def test_db():
     finally:
         session.close()
 
+def print_all_data():
+    """Print all users and prompt logs."""
+    session = Session()
+    try:
+        users = session.query(User).all()
+        prompts = session.query(PromptLog).all()
+        print("Users:")
+        for user in users:
+            print(f"Username: {user.username}, Prompt Limit: {user.prompt_limit}, Prompt Count: {user.prompt_count}, Is Admin: {user.is_admin}")
+        print("\nPrompt Logs:")
+        for prompt in prompts:
+            print(f"User ID: {prompt.user_id}, Prompt: {prompt.prompt}, Response: {prompt.response}")
+    except Exception as e:
+        print(f"Error fetching data: {e}")
+    finally:
+        session.close()
+
 if __name__ == "__main__":
-    ingest_users()
-    admin_prompt()
-    test_db()
+    # ingest_users()
+    # admin_prompt()
+    # test_db()
+    print_all_data()

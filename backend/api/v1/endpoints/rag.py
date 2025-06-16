@@ -5,7 +5,7 @@ from backend.core.auth import get_current_user
 from openai import OpenAI
 import os
 from pydantic import BaseModel
-from backend.core.sql import SessionLocal, get_user_by_username
+from backend.core.sql import SessionLocal, get_user_by_username, increment_prompt_count, log_prompt
 
 instructions = """
 You are a helpful AI assistant that answers questions based on the provided context. Only use the context if the user prompt is asking for Jan.
@@ -27,7 +27,6 @@ def rag_query(
     rag_request: RagRequest,
     username: str = (Depends(get_current_user))
 ):
-
     db = SessionLocal()
     user = get_user_by_username(db, username)
     if not user:
@@ -36,8 +35,9 @@ def rag_query(
     if user.prompt_count >= user.prompt_limit:
         raise HTTPException(status_code=403, detail="Prompt limit reached.")
     # Increment count and save prompt (must be atomic in production, for now it's fine)
-    user.prompt_count += 1
-    db.commit()
+    if not increment_prompt_count(db, username):
+        raise HTTPException(status_code=403, detail="Prompt limit reached.")
+
     """
     RAG: retrieve relevant chunks and generate answer via OpenAI.
     """
@@ -77,10 +77,9 @@ def rag_query(
     #     "raw_chunks": retrieved
     # }
 
+    log_prompt(db, username, rag_request.query, answer)
     return {
         "answer": answer,
         "prompt_count": user.prompt_count,
         "prompt_limit": user.prompt_limit
     }
-
-

@@ -8,7 +8,8 @@ from typing import Optional
 import os
 
 Base = declarative_base()
-engine = create_engine(os.environ.get("DATABASE_URL"))
+# engine = create_engine(os.environ.get("DATABASE_URL"))
+engine = create_engine("postgresql://postgres:password@postgres:5432/postgres")
 SessionLocal = sessionmaker(bind=engine)
 
 # --- MODELS ---

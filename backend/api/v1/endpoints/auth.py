@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Request
 from pydantic import BaseModel
-from backend.core.sql import get_user_by_username, verify_user_password
-from backend.core.auth import create_access_token, get_current_user, SessionLocal
-from backend.core.sql import Session as DBSession
+from backend.core.sql import get_user_by_username, verify_user_password, SessionLocal
+from backend.core.auth import create_access_token, get_current_user
 
 router = APIRouter()
 
@@ -18,7 +17,7 @@ class TokenResponse(BaseModel):
 # --- ENDPOINTS ---
 @router.post("/login", response_model=TokenResponse)
 def login(data: LoginRequest):
-    db = DBSession()
+    db = SessionLocal()
     user = get_user_by_username(db, data.username)
     if not user or not verify_user_password(db, data.username, data.password):
         raise HTTPException(status_code=401, detail="Incorrect username or password")
