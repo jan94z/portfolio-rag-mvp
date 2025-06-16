@@ -4,16 +4,16 @@ import click
 from typing import List
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct, VectorParams, Distance
+from dotenv import load_dotenv
 
 from app.core.doc_parsing import parse_txt_file
 from app.core.chunking import chunk_text
 from app.core.embedding import embed_chunks
 
-COLLECTION_NAME = "docs"
+load_dotenv("/home/jan/portfolio-rag-mvp/.env")
 VECTOR_SIZE = 384  # For all-MiniLM-L6-v2
-
-client = QdrantClient(host="localhost", port=6333)  # Or 'qdrant' if Docker Compose
-client = QdrantClient(host=os.environ.get("QDRANT_HOST", "localhost"),
+COLLECTION_NAME = os.environ.get("QDRANT_COLLECTION")
+client = QdrantClient(host=os.environ.get("QDRANT_HOST", "qdrant"),
                       port=int(os.environ.get("QDRANT_PORT", 6333)))
 
 def ensure_collection():

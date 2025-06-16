@@ -7,3 +7,7 @@ tiktoken
 sentence-transformers
 qdrant-client
 openai
+python-jose[cryptography]
+passlib[bcrypt]
+sqlalchemy
+psycopg2-binary

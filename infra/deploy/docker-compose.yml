@@ -2,17 +2,24 @@ services:
   qdrant:
     image: qdrant/qdrant:latest
     container_name: qdrant
-    ports:
-      - "6333:6333"
     volumes:
       - qdrant_data:/qdrant/storage
     restart: unless-stopped
 
+  postgres:
+    image: postgres:latest
+    container_name: rag-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER} # TODO GITHUB ACTIONS SECRETS
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # TODO GITHUB ACTIONS SECRETS
+      POSTGRES_DB: ${POSTGRES_DB} # TODO GITHUB ACTIONS SECRETS
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
   api:
-    image: ${DOCKERHUB_USERNAME}/portfolio-rag-mvp:latest
+    image: ${DOCKERHUB_USERNAME}/portfolio-rag-mvp-api:latest
     container_name: rag-api
-    ports:
-      - "8000:8000"
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - QDRANT_HOST=qdrant
@@ -21,5 +28,13 @@ services:
       - qdrant
     restart: unless-stopped
 
+  frontend:
+    image: ${DOCKERHUB_USERNAME}/portfolio-rag-mvp-frontend:latest
+    container_name: rag-frontend
+    ports:
+      - "8501:8501"
+
+
 volumes:
   qdrant_data:
+  postgres_data:
