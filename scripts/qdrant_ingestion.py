@@ -5,7 +5,6 @@ from typing import List
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct, VectorParams, Distance
 from dotenv import load_dotenv
-
 from app.core.doc_parsing import parse_txt_file
 from app.core.chunking import chunk_text
 from app.core.embedding import embed_chunks
@@ -13,7 +12,7 @@ from app.core.embedding import embed_chunks
 load_dotenv("/home/jan/portfolio-rag-mvp/.env")
 VECTOR_SIZE = 384  # For all-MiniLM-L6-v2
 COLLECTION_NAME = os.environ.get("QDRANT_COLLECTION")
-client = QdrantClient(host=os.environ.get("QDRANT_HOST", "qdrant"),
+client = QdrantClient(host=os.environ.get("DROPLET_IP", "qdrant"),
                       port=int(os.environ.get("QDRANT_PORT", 6333)))
 
 def ensure_collection():

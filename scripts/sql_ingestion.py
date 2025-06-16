@@ -6,8 +6,7 @@ import os
 
 # Load environment variables
 load_dotenv("/home/jan/portfolio-rag-mvp/.env")
-# DATABASE_URL = os.environ.get("DATABASE_URL")
-DATABASE_URL="postgresql://postgres:password@localhost:5435/postgres"
+DATABASE_URL = f"postgresql://{os.environ.get('POSTGRES_USER')}:{os.environ.get('POSTGRES_PASSWORD')}@{os.environ.get('DROPLET_IP')}:5432/{os.environ.get('POSTGRES_DB')}"
 USERLIST = os.environ.get("USERS")
 PROMPT_LIMIT = int(os.environ.get("PROMPT_LIMIT", 10))
 ADMIN_USERS = set(name.strip() for name in os.environ.get("ADMIN", "").split(","))
@@ -40,21 +39,21 @@ def ingest_users():
     session.close()
     print("Users successfully ingested.")
 
-def admin_prompt():
-    # make a dummy prompt log for each admin user so that the db is not empty
-    session = Session()
-    for admin in ADMIN_USERS:
-        user = session.query(User).filter_by(username=admin).first()
-        if user:
-            prompt_log = PromptLog(
-                user_id=user.id,
-                prompt="This is a dummy prompt.",
-                response="This is a dummy response."
-            )
-            session.add(prompt_log)
-    session.commit()
-    session.close()
-    print("Admin prompt logs successfully ingested.")
+# def admin_prompt():
+#     # make a dummy prompt log for each admin user so that the db is not empty
+#     session = Session()
+#     for admin in ADMIN_USERS:
+#         user = session.query(User).filter_by(username=admin).first()
+#         if user:
+#             prompt_log = PromptLog(
+#                 user_id=user.id,
+#                 prompt="This is a dummy prompt.",
+#                 response="This is a dummy response."
+#             )
+#             session.add(prompt_log)
+#     session.commit()
+#     session.close()
+#     print("Admin prompt logs successfully ingested.")
 
 def test_db():
     """Test the database connection and basic operations."""
@@ -90,7 +89,7 @@ def print_all_data():
         session.close()
 
 if __name__ == "__main__":
-    # ingest_users()
+    ingest_users()
     # admin_prompt()
-    # test_db()
-    print_all_data()
+    test_db()
+    # print_all_data()

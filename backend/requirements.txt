@@ -1,6 +1,5 @@
 httpx
 fastapi
-python-dotenv
 uvicorn
 langchain-text-splitters
 tiktoken

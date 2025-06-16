@@ -1,21 +1,21 @@
 from datetime import datetime, timedelta, timezone
 from jose import JWTError, jwt
 from fastapi import Request, HTTPException
+import os
 
-# SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "change_me")  # Put in .env!
-SECRET_KEY = "SECRET"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+JWT_SECRET = os.environ.get("JWT_SECRET")
+ALGORITHM = os.environ.get("JWT_ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.environ.get("JWT_TOKEN_EXPIRE_MINUTES"))
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
     expire = datetime.now(timezone.utc) + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return jwt.encode(to_encode, JWT_SECRET, algorithm=ALGORITHM)
 
 def decode_access_token(token: str):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[ALGORITHM])
         username = payload.get("sub")
         if username is None:
             raise Exception("Missing sub claim")

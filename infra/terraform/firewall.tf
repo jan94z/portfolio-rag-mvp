@@ -19,7 +19,19 @@ resource "digitalocean_firewall" "api_firewall" {
   protocol         = "tcp"
   port_range       = "6333"
   source_addresses = [var.my_ip]
-}
+  }
+
+  inbound_rule {
+  protocol         = "tcp"
+  port_range       = "8501"
+  source_addresses = [var.my_ip]
+  }
+
+  inbound_rule {
+  protocol         = "tcp"
+  port_range       = "5432"
+  source_addresses = [var.my_ip]
+  }
 
   outbound_rule {
     protocol         = "tcp"

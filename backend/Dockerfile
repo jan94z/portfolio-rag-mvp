@@ -19,10 +19,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # RUN rm -rf /root/.cache
 
 # Copy application code
-# COPY ./backend /root/backend
+COPY ./backend /root/backend
 
 ENV PYTHONUNBUFFERED=1
 
-# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"] 
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"] 
 # TODO REMOVE RELOAD IN PROD
