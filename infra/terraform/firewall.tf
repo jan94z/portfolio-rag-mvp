@@ -6,7 +6,7 @@ resource "digitalocean_firewall" "api_firewall" {
   inbound_rule {
     protocol         = "tcp"
     port_range       = "22"
-    source_addresses = [var.my_ip]
+    source_addresses = ["0.0.0.0/0"]
   }
 
   inbound_rule {
