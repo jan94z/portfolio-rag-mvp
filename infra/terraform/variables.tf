@@ -1,3 +1,8 @@
+variable "droplet_name" {
+  description = "Name of the droplet to point the domain to"
+  type        = string
+}
+
 variable "do_token" {
   description = "DigitalOcean access token"
   type        = string

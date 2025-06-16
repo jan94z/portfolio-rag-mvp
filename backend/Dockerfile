@@ -9,7 +9,7 @@ WORKDIR /root
 RUN rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for Docker cache efficiency
-COPY ./app/requirements.txt /root/requirements.txt
+COPY ./backend/requirements.txt /root/requirements.txt
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt
@@ -19,8 +19,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # RUN rm -rf /root/.cache
 
 # Copy application code
-COPY ./app /root/app
+COPY ./backend /root/backend
 
 ENV PYTHONUNBUFFERED=1
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"] 
+# TODO REMOVE RELOAD IN PROD

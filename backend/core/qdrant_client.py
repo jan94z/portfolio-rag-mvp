@@ -1,12 +1,10 @@
 from qdrant_client import QdrantClient
-from qdrant_client.models import PointStruct, VectorParams, Distance
 from typing import List
 import os
 
 COLLECTION_NAME = "docs"
 VECTOR_SIZE = 384  # For all-MiniLM-L6-v2
 
-client = QdrantClient(host="localhost", port=6333)  # Or 'qdrant' if Docker Compose
 client = QdrantClient(host=os.environ.get("QDRANT_HOST", "localhost"),
                       port=int(os.environ.get("QDRANT_PORT", 6333)))
 

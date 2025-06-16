@@ -14,7 +14,7 @@ provider "digitalocean" {
 }
 
 resource "digitalocean_droplet" "portfolio-rag-mvp-vm" {
-  name       = "portfolio-rag-mvp-vm"
+  name       = var.droplet_name
   region     = var.region
   size       = var.droplet_size
   image      = var.image

@@ -1,4 +1,4 @@
-name: Build and Deploy to DigitalOcean Droplet
+name: Build and Deploy to DigitalOcean Droplet 
 
 on:
   push:
@@ -25,9 +25,17 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./app/Dockerfile
+          file: ./backend/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-rag-mvp:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-rag-mvp-api:latest
+
+      - name: Build and push Frontend image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./frontend/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-rag-mvp-frontend:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -64,6 +72,12 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key root@${{ secrets.DROPLET_IP }} << EOF
             echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > /root/app/.env
             echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> /root/app/.env
+            echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> /root/app/.env
+            echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> /root/app/.env
+            echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> /root/app/.env
+            echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> /root/app/.env
+            echo "JWT_ALGORITHM=${{ secrets.JWT_ALGORITHM }}" >> /root/app/.env
+            echo "JWT_TOKEN_EXPIRE_MINUTES=${{ secrets.JWT_TOKEN_EXPIRE_MINUTES }}" >> /root/app/.env
           EOF
 
       - name: Pull and start containers on Droplet
