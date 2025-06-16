@@ -6,7 +6,7 @@ resource "digitalocean_firewall" "api_firewall" {
   inbound_rule {
     protocol         = "tcp"
     port_range       = "22"
-    source_addresses = ["0.0.0.0/0"]
+    source_addresses = [var.my_ip]
   }
 
   inbound_rule {
@@ -31,6 +31,12 @@ resource "digitalocean_firewall" "api_firewall" {
   protocol         = "tcp"
   port_range       = "5432"
   source_addresses = [var.my_ip]
+  }
+
+  inbound_rule {
+  protocol         = "tcp"
+  port_range       = "80"
+  source_addresses = ["0.0.0.0/0"]
   }
 
   outbound_rule {

@@ -11,7 +11,7 @@ from backend.core.embedding import embed_chunks
 
 load_dotenv("/home/jan/portfolio-rag-mvp/.env")
 VECTOR_SIZE = 384  # For all-MiniLM-L6-v2
-COLLECTION_NAME = os.environ.get("QDRANT_COLLECTION")
+COLLECTION_NAME = os.environ.get("QDRANT_COLLECTION", "docs")
 client = QdrantClient(host=os.environ.get("DROPLET_IP", "qdrant"),
                       port=int(os.environ.get("QDRANT_PORT", 6333)))
 
