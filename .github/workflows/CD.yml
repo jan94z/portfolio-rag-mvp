@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - "auth+frontend" # TODO REMOVE AFTER TESTING
 
 jobs:
   build-and-push: 
