@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from backend.core.sql import get_user_by_username, verify_user_password, SessionLocal
 from backend.core.auth import create_access_token, get_current_user
-from slowapi.decorator import limiter
+from backend.main import limiter
 
 
 

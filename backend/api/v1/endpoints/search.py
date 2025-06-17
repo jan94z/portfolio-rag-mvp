@@ -2,7 +2,7 @@ from fastapi import APIRouter, Query
 from backend.core.embedding import embed_chunks
 from backend.core.qdrant_client import semantic_search
 from pydantic import BaseModel
-from slowapi.decorator import limiter
+from backend.main import limiter
 
 
 router = APIRouter()
