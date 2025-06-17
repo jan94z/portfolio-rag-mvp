@@ -39,7 +39,6 @@ def rag_query(
     # Enforce prompt limit
     if user.prompt_count >= user.prompt_limit:
         raise HTTPException(status_code=403, detail="Prompt limit reached.")
-    # Increment count and save prompt (must be atomic in production, for now it's fine)
     if not increment_prompt_count(db, username):
         raise HTTPException(status_code=403, detail="Prompt limit reached.")
 
