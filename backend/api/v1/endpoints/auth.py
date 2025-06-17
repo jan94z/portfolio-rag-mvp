@@ -1,9 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from backend.core.sql import get_user_by_username, verify_user_password, SessionLocal
 from backend.core.auth import create_access_token, get_current_user
+from slowapi.decorator import limiter
+
+
 
 router = APIRouter()
+
 
 # --- MODELS ---
 class LoginRequest(BaseModel):
@@ -16,6 +20,7 @@ class TokenResponse(BaseModel):
 
 # --- ENDPOINTS ---
 @router.post("/login", response_model=TokenResponse)
+@limiter.limit("10/minute")
 def login(data: LoginRequest):
     db = SessionLocal()
     user = get_user_by_username(db, data.username)
@@ -25,6 +30,7 @@ def login(data: LoginRequest):
     return {"access_token": token, "token_type": "bearer"}
 
 @router.get("/me")
+@limiter.limit("10/minute")
 def me(username: str = Depends(get_current_user)):
     db = SessionLocal()
     user = get_user_by_username(db, username)

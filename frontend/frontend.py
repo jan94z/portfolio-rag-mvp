@@ -1,9 +1,10 @@
 import streamlit as st
 import requests
+import os
 
 st.set_page_config(page_title="Jan's Portfolio RAG App", page_icon="🔥", layout="wide")
 
-BACKEND_URL = "http://rag-api:8000/api/v1"
+BACKEND_URL = os.environ.get("BACKEND_URL")
 
 # --- Session state ---
 if "token" not in st.session_state:
@@ -49,6 +50,8 @@ def login(username, password):
         fetch_me()
         st.success("Login successful!")
         st.rerun()
+    elif resp.status_code == 429:
+        st.warning("You have reached the login limit. Please wait and try again later.")
     else:
         st.error("Login failed.")
         st.session_state.token = None
@@ -138,6 +141,8 @@ elif st.session_state.page == "chat":
                 st.rerun()
             elif r.status_code == 403:
                 st.error("Prompt limit reached.")
+            elif r.status_code == 429:
+                st.warning("You have reached the prompt limit (10 per Minute). Please wait and try again later.")
             elif r.status_code == 401:
                 st.error("Session expired. Please log in again.")
                 logout()
