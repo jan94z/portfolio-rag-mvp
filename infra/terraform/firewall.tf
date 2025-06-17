@@ -6,7 +6,11 @@ resource "digitalocean_firewall" "api_firewall" {
   inbound_rule {
     protocol         = "tcp"
     port_range       = "22"
+<<<<<<< Updated upstream
     source_addresses = ["0.0.0.0/0"]
+=======
+    source_addresses =  [var.my_ip] #["0.0.0.0/0"]
+>>>>>>> Stashed changes
   }
 
   inbound_rule {

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, declarative_base, relationship, Session, sessionmaker
 from sqlalchemy import (
-    Column, Integer, String, Boolean, ForeignKey, Text, create_engine
+    Column, Integer, String, Boolean, ForeignKey, Text, create_engine, DateTime, func
 )
 from sqlalchemy.ext.hybrid import hybrid_property
 import bcrypt
@@ -42,6 +42,7 @@ class PromptLog(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     prompt = Column(Text, nullable=False)
     response = Column(Text, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     user = relationship("User", back_populates="prompts")
 

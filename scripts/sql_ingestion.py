@@ -88,8 +88,39 @@ def print_all_data():
     finally:
         session.close()
 
+def get_all_prompts_with_usernames():
+    """Fetch all prompts with the corresponding username."""
+    session = Session()
+    try:
+        # Query non-admin users and join with prompt logs
+        results = (
+            session.query(User.username, PromptLog.prompt, PromptLog.response, PromptLog.created_at) \
+                .join(PromptLog, User.id == PromptLog.user_id) \
+                .filter(User.is_admin == False) \
+                .order_by(User.username, PromptLog.created_at) \
+                .all()
+        )
+        if not results:
+            print("No prompts found for non-admin users.")
+            return []
+        print("Prompts with usernames:")
+        for username, prompt, response, created_at in results:
+            print(f"Username: {username}\nPrompt: {prompt}\nResponse: {response}\nCreated At: {created_at}")
+        return results
+    except Exception as e:
+        print(f"Error fetching prompt data: {e}")
+        return []
+    finally:
+        session.close()
+
 if __name__ == "__main__":
     ingest_users()
     # admin_prompt()
+<<<<<<< Updated upstream
     test_db()
     # print_all_data()
+=======
+    # test_db()
+    # print_all_data()
+    get_all_prompts_with_usernames()
+>>>>>>> Stashed changes
