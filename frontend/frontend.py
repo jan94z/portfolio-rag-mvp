@@ -102,7 +102,7 @@ elif st.session_state.page == "chat":
         st.sidebar.write("")
     st.sidebar.markdown("### LLM Settings")
     temperature = float(st.sidebar.slider('temperature', min_value=0.01, max_value=1.0, value=0.3, step=0.01, disabled=not st.session_state.is_admin))
-    max_tokens = int(st.sidebar.slider('max_tokens', min_value=1, max_value=256, value=128, step=1, disabled=not st.session_state.is_admin))
+    max_tokens = int(st.sidebar.slider('max_tokens', min_value=1, max_value=512, value=256, step=1, disabled=not st.session_state.is_admin))
     top_k = int(st.sidebar.slider('top_k', min_value=1, max_value=20, value=10, step=1, disabled=not st.session_state.is_admin))
     model = str(st.sidebar.selectbox('Model', ['gpt-3.5-turbo', 'gpt-4', 'gpt-4.1'], disabled=not st.session_state.is_admin))
 
@@ -170,8 +170,8 @@ elif st.session_state.page == "chat":
         example_prompt = "Why should we hire Jan?"
     if cols[1].button("How could Jan contribute to our team?", disabled=(remaining == 0)):
         example_prompt = "How could Jan contribute to our team?"
-    if cols[2].button("What are Jan's strengths and weaknesses?", disabled=(remaining == 0)):
-        example_prompt = "What are Jan's strengths and weaknesses?"
+    if cols[2].button("Give me a structured overview of Jan's career path", disabled=(remaining == 0)):
+        example_prompt = "Give me a structured overview of Jan's career path"
     st.warning("Clicking these buttons **WILL** count towards your prompt limit.")
     st.write("---")
     if example_prompt:
