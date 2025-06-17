@@ -6,7 +6,7 @@ from openai import OpenAI
 import os
 from pydantic import BaseModel
 from backend.core.sql import SessionLocal, get_user_by_username, increment_prompt_count, log_prompt
-from backend.main import limiter
+from backend.core.rate_limit import limiter
 import yaml
 
 with open("system_prompt.yaml", "r") as f:

@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from backend.api.v1.endpoints import search, rag, auth
-from slowapi import Limiter
 from slowapi.errors import RateLimitExceeded
 from fastapi.responses import JSONResponse
-from slowapi.util import get_remote_address
+from backend.core.rate_limit import limiter
 
 
 app = FastAPI(
@@ -12,7 +11,6 @@ app = FastAPI(
 )
 
 
-limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 
 
