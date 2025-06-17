@@ -116,11 +116,8 @@ def get_all_prompts_with_usernames():
 if __name__ == "__main__":
     # ingest_users()
     # admin_prompt()
-<<<<<<< Updated upstream
-    test_db()
     # print_all_data()
-=======
     # test_db()
     # print_all_data()
     get_all_prompts_with_usernames()
->>>>>>> Stashed changes
+
