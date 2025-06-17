@@ -24,7 +24,7 @@ def ingest_users():
         if not session.query(User).filter_by(username=username).first():
             if username in ADMIN_USERS:
                 user = User(
-                username=username,
+                username=username,  
                 prompt_limit=10000,
                 is_admin=True
             )
@@ -118,6 +118,6 @@ if __name__ == "__main__":
     # admin_prompt()
     # print_all_data()
     # test_db()
-    # print_all_data()
-    get_all_prompts_with_usernames()
+    print_all_data()
+    # get_all_prompts_with_usernames()
 
