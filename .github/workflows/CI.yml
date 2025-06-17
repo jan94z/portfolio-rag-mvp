@@ -1,31 +1,78 @@
-# .github/workflows/CI.yml
 name: CI
 
 on:
   push:
-    branches:
-      - main
-      - deployment
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
-      - name: Install dependencies
+
+      - name: Install flake8
+        run: pip install flake8
+
+      # Install all requirements for backend
+      - name: Install backend requirements
         run: |
-          cd app
-          pip install -r requirements.txt
-      - name: Lint code
+          pip install -r ./backend/requirements.txt
+
+      # Install all requirements for frontend
+      - name: Install frontend requirements
         run: |
-          cd app
-          pip install flake8
-          flake8 .
-      # Add tests here
+          pip install -r ./frontend/requirements.txt
+
+      # Lint backend code
+      - name: Lint backend code
+        run: |
+          flake8 ./backend
+
+      # Lint frontend code (if it contains Python)
+      - name: Lint frontend code
+        run: |
+          flake8 ./frontend
+
+        # Dockerfile linting
+      - name: Lint Backend Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ./backend/Dockerfile  # update path
+      - name: Lint Frontend Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ./frontend/Dockerfile  # update path
+
+      # Terraform linting
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive infra/terraform
+
+      - name: Terraform validate
+        run: |
+          cd infra/terraform
+          terraform init -backend=false
+          terraform validate
+
+      - name: Install tflint
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+
+      - name: Run tflint
+        run: |
+          cd infra/terraform
+          tflint --init
+          tflint
+
+      # Optionally, run tests here...
+      # - name: Run tests
+      #   run: ...
