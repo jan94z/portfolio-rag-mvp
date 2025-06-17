@@ -114,7 +114,7 @@ def get_all_prompts_with_usernames():
         session.close()
 
 if __name__ == "__main__":
-    ingest_users()
+    # ingest_users()
     # admin_prompt()
 <<<<<<< Updated upstream
     test_db()

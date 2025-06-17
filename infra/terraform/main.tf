@@ -22,4 +22,5 @@ resource "digitalocean_droplet" "portfolio-rag-mvp-vm" {
   monitoring = true
   backups    = false
   tags       = ["portfolio", "rag", "vm"]
+  #user_data = file("${path.module}/cloud-init.sh")
 }

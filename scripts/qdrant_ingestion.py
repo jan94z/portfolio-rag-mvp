@@ -71,5 +71,5 @@ def main(folderpath: str):
             print(f"Skipping non-TXT file: {file}")
 
 if __name__ == "__main__":
-    # main()
-    ensure_collection()
+    main()
+    # ensure_collection()

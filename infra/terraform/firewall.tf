@@ -13,11 +13,11 @@ resource "digitalocean_firewall" "api_firewall" {
 >>>>>>> Stashed changes
   }
 
-  inbound_rule {
-    protocol         = "tcp"
-    port_range       = "8000"
-    source_addresses = [var.my_ip]
-  }
+  # inbound_rule {
+  #   protocol         = "tcp"
+  #   port_range       = "8000"
+  #   source_addresses = [var.my_ip]
+  # }
 
   inbound_rule {
   protocol         = "tcp"
@@ -25,11 +25,11 @@ resource "digitalocean_firewall" "api_firewall" {
   source_addresses = [var.my_ip]
   }
 
-  inbound_rule {
-  protocol         = "tcp"
-  port_range       = "8501"
-  source_addresses = [var.my_ip]
-  }
+  # inbound_rule {
+  # protocol         = "tcp"
+  # port_range       = "8501"
+  # source_addresses = [var.my_ip]
+  # }
 
   inbound_rule {
   protocol         = "tcp"

@@ -66,6 +66,7 @@ jobs:
       - name: Copy Docker Compose file to Droplet
         run: |
           scp -o StrictHostKeyChecking=no -i private_key infra/deploy/docker-compose.yml root@${{ secrets.DROPLET_IP }}:/root/app/docker-compose.yml
+          scp -o StrictHostKeyChecking=no -i private_key infra/deploy/config.toml root@${{ secrets.DROPLET_IP }}:/root/app/config.toml
 
       - name: Create .env file on Droplet
         run: |
