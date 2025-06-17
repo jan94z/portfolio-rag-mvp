@@ -89,7 +89,7 @@ def print_all_data():
         session.close()
 
 if __name__ == "__main__":
-    ingest_users()
+    # ingest_users()
     # admin_prompt()
-    test_db()
-    # print_all_data()
+    # test_db()
+    print_all_data()
