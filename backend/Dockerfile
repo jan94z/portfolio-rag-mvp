@@ -15,8 +15,8 @@ RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/wh
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Pre-download Hugging Face model so container is ready at startup, then clear cache
-# RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
-# RUN rm -rf /root/.cache
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
+RUN rm -rf /root/.cache
 
 # Copy application code
 COPY ./backend /root/backend

@@ -156,12 +156,18 @@ elif st.session_state.page == "chat":
     def on_click_example_prompt(prompt):
         if remaining > 0:
             ask_backend(prompt, temperature, max_tokens, top_k, model)
+    example_prompt = None
     cols = st.columns(3)
-    cols[0].button("Why should we hire Jan?", on_click=lambda: on_click_example_prompt("Why should we hire Jan?"), disabled=(remaining == 0))
-    cols[1].button("How could Jan contribute to our team?", on_click=lambda: on_click_example_prompt("How could Jan contribute to our team?"), disabled=(remaining == 0))
-    cols[2].button("What are Jan's strengths and weaknesses?", on_click=lambda: on_click_example_prompt("What are Jan's strengths and weaknesses?"), disabled=(remaining == 0))
+    if cols[0].button("Why should we hire Jan?", disabled=(remaining == 0)):
+        example_prompt = "Why should we hire Jan?"
+    if cols[1].button("How could Jan contribute to our team?", disabled=(remaining == 0)):
+        example_prompt = "How could Jan contribute to our team?"
+    if cols[2].button("What are Jan's strengths and weaknesses?", disabled=(remaining == 0)):
+        example_prompt = "What are Jan's strengths and weaknesses?"
     st.warning("Clicking these buttons **WILL** count towards your prompt limit.")
     st.write("---")
+    if example_prompt:
+        ask_backend(example_prompt, temperature, max_tokens, top_k, model)
 
     # Show chat messages
     for message in st.session_state.messages:
