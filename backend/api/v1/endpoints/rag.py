@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from backend.core.embedding import embed_chunks
 from backend.core.qdrant_client import semantic_search
 from backend.core.auth import get_current_user
@@ -9,7 +9,7 @@ from backend.core.sql import SessionLocal, get_user_by_username, increment_promp
 from backend.core.rate_limit import limiter
 import yaml
 
-with open("system_prompt.yaml", "r") as f:
+with open("./backend/api/v1/endpoints/system_prompt.yml", "r") as f:
     config = yaml.safe_load(f)
 
 instructions = config["system_prompt"]
@@ -28,6 +28,7 @@ class RagRequest(BaseModel):
 @router.post("/rag")
 @limiter.limit("10/minute")
 def rag_query(
+    request: Request,
     rag_request: RagRequest,
     username: str = (Depends(get_current_user))
 ):
