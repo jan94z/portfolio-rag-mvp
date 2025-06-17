@@ -23,5 +23,5 @@ async def rate_limit_handler(request, exc):
 
 
 app.include_router(auth.router, prefix="/api/v1")
-app.include_router(search.router, prefix="/api/v1")
+# app.include_router(search.router, prefix="/api/v1")
 app.include_router(rag.router, prefix="/api/v1")
