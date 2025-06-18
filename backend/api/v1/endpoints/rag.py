@@ -5,9 +5,10 @@ from backend.core.auth import get_current_user
 from openai import OpenAI
 import os
 from pydantic import BaseModel
-from backend.core.sql import SessionLocal, get_user_by_username, increment_prompt_count, log_prompt
+from backend.core.sql import get_user_by_username, increment_prompt_count, log_prompt, get_db
 from backend.core.rate_limit import limiter
 import yaml
+from sqlalchemy.orm import Session
 
 with open("./backend/api/v1/endpoints/system_prompt.yml", "r") as f:
     config = yaml.safe_load(f)
@@ -30,9 +31,9 @@ class RagRequest(BaseModel):
 def rag_query(
     request: Request,
     rag_request: RagRequest,
-    username: str = (Depends(get_current_user))
+    username: str = (Depends(get_current_user)),
+    db: Session = Depends(get_db)
 ):
-    db = SessionLocal()
     user = get_user_by_username(db, username)
     if not user:
         raise HTTPException(status_code=401, detail="User not found")

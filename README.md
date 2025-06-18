@@ -32,7 +32,7 @@ This project follows a modular, scalable architecture:
 * Infrastructure: Everything runs in containers. For local development, Docker Compose can spin up the whole stack. For cloud, Terraform provisions a VM and restricts ports via a firewall.
 
 ## Tech Stack
-* Language & ML: Python 3.10/3.11, OpenAI GPT-3.5/GPT-4/GPT-4.1 API, HuggingFace SentenceTransformers.
+* Language & ML: Python 3.10/3.11, OpenAI GPT-3.5/GPT-4 API, HuggingFace SentenceTransformers.
 * Backend: FastAPI (REST framework), SQLAlchemy (database ORM), Pydantic (data models), PyJWT via Python-JOSE (JWT auth), SlowAPI (rate limiting).
 * Database: PostgreSQL (relational DB for user data and logs), Qdrant (vector similarity search engine).
 * DevOps: Docker & Docker Compose for containerization, Terraform (Infrastructure as Code for DigitalOcean cloud resources), GitHub Actions (CI for linting and validation).

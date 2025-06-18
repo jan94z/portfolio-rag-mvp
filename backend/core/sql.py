@@ -11,6 +11,13 @@ Base = declarative_base()
 engine = create_engine(f"postgresql://{os.environ.get('POSTGRES_USER')}:{os.environ.get('POSTGRES_PASSWORD')}@postgres:5432/{os.environ.get('POSTGRES_DB')}")
 SessionLocal = sessionmaker(bind=engine)
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 # --- MODELS ---
 class User(Base):
     __tablename__ = "users"

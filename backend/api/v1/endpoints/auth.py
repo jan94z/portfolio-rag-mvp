@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
-from backend.core.sql import get_user_by_username, verify_user_password, SessionLocal
+from backend.core.sql import get_user_by_username, verify_user_password, get_db
 from backend.core.auth import create_access_token, get_current_user
 from backend.core.rate_limit import limiter
+from sqlalchemy.orm import Session
 
 
 
@@ -21,8 +22,7 @@ class TokenResponse(BaseModel):
 # --- ENDPOINTS ---
 @router.post("/login", response_model=TokenResponse)
 @limiter.limit("10/minute")
-def login(request: Request, data: LoginRequest):
-    db = SessionLocal()
+def login(request: Request, data: LoginRequest, db: Session = Depends(get_db)):
     user = get_user_by_username(db, data.username)
     if not user or not verify_user_password(db, data.username, data.password):
         raise HTTPException(status_code=401, detail="Incorrect username or password")
@@ -31,8 +31,7 @@ def login(request: Request, data: LoginRequest):
 
 @router.get("/me")
 @limiter.limit("10/minute")
-def me(request: Request, username: str = Depends(get_current_user)):
-    db = SessionLocal()
+def me(request: Request, username: str = Depends(get_current_user), db: Session = Depends(get_db)):
     user = get_user_by_username(db, username)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
