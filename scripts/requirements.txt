@@ -14,3 +14,4 @@ psycopg2-binary
 streamlit
 requests
 python-dotenv
+spacy

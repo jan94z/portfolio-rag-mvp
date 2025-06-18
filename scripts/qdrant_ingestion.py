@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from backend.core.doc_parsing import parse_txt_file
 from backend.core.chunking import chunk_text
 from backend.core.embedding import embed_chunks
+import uuid
 
 load_dotenv("/home/jan/portfolio-rag-mvp/.env")
 VECTOR_SIZE = 384  # For all-MiniLM-L6-v2
@@ -39,13 +40,18 @@ def upsert_chunks(chunks: List[str], vectors: List[List[float]], doc_id: str = N
     ensure_collection()
     points = [
         PointStruct(
-            id=idx,  # Let Qdrant autogenerate
+            id=str(uuid.uuid4()),
             vector=vector,
             payload={"text": chunk, "doc_id": doc_id} if doc_id else {"text": chunk}
         )
-        for idx, (chunk, vector) in enumerate(zip(chunks, vectors))
+        for chunk, vector in zip(chunks, vectors)
     ]
-    client.upsert(collection_name=COLLECTION_NAME, points=points)
+    if not points:
+        print("No points to insert for this document.")
+        return
+    # Perform the upsert and print the response for debugging
+    response = client.upsert(collection_name=COLLECTION_NAME, points=points)
+    print("Qdrant upsert response:", response)
 
 def ingest_txt_file(filepath: str, doc_id: str = None):
     print(f"Ingesting {filepath} ...")
@@ -70,8 +76,17 @@ def main(folderpath: str):
             ingest_txt_file(folderpath / file, doc_id=idx)
         else:
             print(f"Skipping non-TXT file: {file}")
+    
+    # 
+    res, _ = client.scroll(collection_name="docs", limit=100)
+    print("Found", len(res), "points")
+    for pt in res:
+        print(pt.payload)
+
 
 def check_payload():
+    print(client.get_collections())
+
     scroll_res = client.scroll(
         collection_name="docs",
         limit=100  # Adjust as needed

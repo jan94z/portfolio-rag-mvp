@@ -103,8 +103,8 @@ if __name__ == "__main__":
     ingest_users()
     # admin_prompt()
     # print_all_data()
-    test_db()
+    # test_db()
     # print_all_data()
-    # get_all_prompts_with_usernames()
+    get_all_prompts_with_usernames()
     # delete_users_and_prompts()
 
