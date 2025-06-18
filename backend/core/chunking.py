@@ -32,22 +32,21 @@ from typing import List
 # now using sentence based chunking instead of token based chunking
 def chunk_text(
     text: str, 
-    chunk_size: int = 400,    
-    chunk_overlap: int = 80, 
+    chunk_size: int = 1500,      # characters, not tokens!
+    chunk_overlap: int = 200     # characters of overlap
 ) -> List[str]:
     """
     Splits text into sentence-based chunks using LangChain's SpacyTextSplitter.
 
     Args:
         text: The full document as a string.
-        chunk_size: Tokens per chunk.
-        chunk_overlap: Overlap tokens between chunks.
+        chunk_size: Characters per chunk.
+        chunk_overlap: Overlap in characters between chunks.
 
     Returns:
         List of string chunks.
     """
     splitter = SpacyTextSplitter(
-        separator=".", # Use period as sentence separator
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap
     )
