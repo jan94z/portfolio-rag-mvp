@@ -1,5 +1,5 @@
 from langchain_text_splitters import TokenTextSplitter
-from langchain.text_splitter import SpacyTextSplitter
+from langchain_text_splitters import SpacyTextSplitter
 from typing import List
 
 # token did not work well, because of my personal information data type...

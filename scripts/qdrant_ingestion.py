@@ -77,8 +77,8 @@ def check_payload():
         limit=100  # Adjust as needed
     )
     for pt in scroll_res[0]:
-        print(pt.payload)  # Check if 'hobbies' and 'technical_skills' info appears
+        print(pt.payload) 
 
 if __name__ == "__main__":
-    # main()
-    check_payload()
+    main()
+    # check_payload()
