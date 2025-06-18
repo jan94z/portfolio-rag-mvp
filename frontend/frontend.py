@@ -89,6 +89,24 @@ if st.session_state.page == "login":
         ### About this App  
         [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/jan94z/portfolio-rag-mvp)
     """)
+    with st.expander("**Impressum / Legal Notice**"):
+        st.markdown("""
+        **Verantwortlich gemäß § 5 TMG:**
+
+        Jan Zimmermann      
+        Brückenstraße 38          
+        52379 Langerwehe         
+        Deutschland           
+        E-Mail: jan.h.zimmermann@web.de
+
+        Dieses Portfolio dient ausschließlich der Präsentation meiner Projekte und ist keine gewerbliche Webseite. 
+                    
+        **Datenschutzhinweis**
+
+        Im Rahmen der Nutzung dieser Demo-App werden von angemeldeten Nutzern die eingegebenen Prompts gespeichert. 
+        Diese Daten dienen ausschließlich der Funktionsfähigkeit der Anwendung und werden nicht an Dritte weitergegeben.  
+        Auf Anfrage kann eine Löschung oder Auskunft über die gespeicherten Daten erfolgen. Es werden keine weiteren personenbezogenen Daten erhoben oder ausgewertet. 
+        """)
 
 elif st.session_state.page == "chat":
     # --- Sidebar ---
@@ -106,7 +124,7 @@ elif st.session_state.page == "chat":
     top_k = int(st.sidebar.slider('top_k', min_value=1, max_value=20, value=10, step=1, disabled=not st.session_state.is_admin))
     model = str(st.sidebar.selectbox('Model', ['gpt-3.5-turbo', 'gpt-4', 'gpt-4.1'], disabled=not st.session_state.is_admin))
 
-    for _ in range(4):
+    for _ in range(2):
         st.sidebar.write("")
     st.sidebar.markdown("""
         [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/jan94z/portfolio-rag-mvp)
@@ -114,6 +132,26 @@ elif st.session_state.page == "chat":
     if st.sidebar.button("Logout"):
         logout()
         st.rerun()
+    for _ in range(2):
+        st.sidebar.write("")
+    with st.sidebar.expander("**Impressum / Legal Notice**"):
+        st.markdown("""
+        **Verantwortlich gemäß § 5 TMG:**
+
+        Jan Zimmermann      
+        Brückenstraße 38          
+        52379 Langerwehe         
+        Deutschland           
+        E-Mail: jan.h.zimmermann@web.de
+
+        Dieses Portfolio dient ausschließlich der Präsentation meiner Projekte und ist keine gewerbliche Webseite. 
+                    
+        **Datenschutzhinweis**
+
+        Im Rahmen der Nutzung dieser Demo-App werden von angemeldeten Nutzern die eingegebenen Prompts gespeichert. 
+        Diese Daten dienen ausschließlich der Funktionsfähigkeit der Anwendung und werden nicht an Dritte weitergegeben.  
+        Auf Anfrage kann eine Löschung oder Auskunft über die gespeicherten Daten erfolgen. Es werden keine weiteren personenbezogenen Daten erhoben oder ausgewertet. 
+        """)
 
     # --- Main content ---
     # --- Logic ---
@@ -191,7 +229,6 @@ elif st.session_state.page == "chat":
     if remaining <= 0:
         st.error("You have reached your prompt limit. Contact Jan for more prompts.")
     st.markdown(f"**Prompts remaining:** {remaining}")
-
 #     # # Clear that history button
 #     # def clear_chat_history():
 #     #     st.session_state.messages = [{"role": "assistant", "content": "Ask me something about Jan!"}]
