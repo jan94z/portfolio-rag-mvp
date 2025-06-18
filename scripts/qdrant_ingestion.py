@@ -51,6 +51,7 @@ def ingest_txt_file(filepath: str, doc_id: str = None):
     print(f"Ingesting {filepath} ...")
     # 1. Parse TXT file
     text = parse_txt_file(filepath)
+    print(text)
     # # 2. Chunk text
     chunks = chunk_text(text)
     print(f"Chunked into {len(chunks)} pieces.")
@@ -70,6 +71,14 @@ def main(folderpath: str):
         else:
             print(f"Skipping non-TXT file: {file}")
 
+def check_payload():
+    scroll_res = client.scroll(
+        collection_name="docs",
+        limit=100  # Adjust as needed
+    )
+    for pt in scroll_res[0]:
+        print(pt.payload)  # Check if 'hobbies' and 'technical_skills' info appears
+
 if __name__ == "__main__":
-    main()
-    # ensure_collection()
+    # main()
+    check_payload()
