@@ -122,7 +122,7 @@ elif st.session_state.page == "chat":
     temperature = float(st.sidebar.slider('temperature', min_value=0.01, max_value=1.0, value=0.3, step=0.01, disabled=not st.session_state.is_admin))
     max_tokens = int(st.sidebar.slider('max_tokens', min_value=1, max_value=512, value=256, step=1, disabled=not st.session_state.is_admin))
     top_k = int(st.sidebar.slider('top_k', min_value=1, max_value=50, value=20, step=1, disabled=not st.session_state.is_admin))
-    model = str(st.sidebar.selectbox('Model', ['gpt-3.5-turbo', 'gpt-4', 'gpt-4.1'], disabled=not st.session_state.is_admin))
+    model = str(st.sidebar.selectbox('Model', ['gpt-4.1', 'gpt-4', 'gpt-3.5-turbo'], disabled=not st.session_state.is_admin))
 
     for _ in range(2):
         st.sidebar.write("")
