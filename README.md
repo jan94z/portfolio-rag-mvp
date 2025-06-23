@@ -1,4 +1,6 @@
 # Retrieval Augmented Generation Portfolio Project
+https://hire-jan.de/ 
+
 **Status**: *Work in progress* \
 [Project Kanban Board](https://github.com/users/jan94z/projects/4)
 
