@@ -1,6 +1,11 @@
 # Retrieval Augmented Generation Portfolio Project
 https://hire-jan.de/ 
 
+![image](https://github.com/user-attachments/assets/95fa1f24-818f-4082-8f6d-ec61427923eb)
+
+
+Contact me if you want to get access to a demo.
+
 **Status**: *Work in progress* \
 [Project Kanban Board](https://github.com/users/jan94z/projects/4)
 
